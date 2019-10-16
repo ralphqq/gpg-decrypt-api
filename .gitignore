@@ -1,0 +1,7 @@
+__pycache__
+venv
+*.pyc
+.flaskenv
+.env
+*.json
+*.zip
