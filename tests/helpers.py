@@ -1,6 +1,6 @@
 import json
 
-import pgpy
+import gnupg
 
 
 def make_json_payload(message, passphrase):
@@ -12,11 +12,17 @@ def make_json_payload(message, passphrase):
 
     Returns:
         JSON object that contains the following key-value pairs:
-            'message': the PGP-encrypted text
-            'passphrase': passphrase used
+            'message': the GPG-encrypted text
+            'passphrase': passphrase used to encrypt
     """
-    msg = pgpy.PGPMessage.new(message)
+    gpg = gnupg.GPG()
+    msg = gpg.encrypt(
+        data=message,
+        passphrase=passphrase,
+        recipients=None,
+        symmetric='AES256'
+    )
     return json.dumps({
-        'message': str(msg.encrypt(passphrase)),
+        'message': str(msg),
         'passphrase': passphrase
     })

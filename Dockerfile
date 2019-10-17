@@ -1,6 +1,9 @@
 FROM python:3.7-slim-buster
 LABEL maintainer="ralph.quirequire@gmail.com"
 
+# Install gpg
+RUN apt-get update && apt-get install -y gnupg
+
 # Create a nonroot user
 RUN useradd -s /bin/bash -G sudo testuser
 
