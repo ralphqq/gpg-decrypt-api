@@ -6,12 +6,15 @@ from app import create_app
 
 class BaseTestCase(unittest.TestCase):
 
-    def setUp(self):
-        self.app = create_app(app_settings='config.TestingConfig')
-        self.client = self.app.test_client()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.app = create_app(app_settings='config.TestingConfig')
+        cls.client = cls.app.test_client()
 
-    def tearDown(self):
-        pass
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
 
     def send_request(self, url='/', method='get', data=None):
         """Helper method to send an HTTP request and get a response.

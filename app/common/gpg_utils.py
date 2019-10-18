@@ -1,6 +1,11 @@
 import gnupg
 
 
+class DecryptionError(Exception):
+    """Thrown when decryption fails."""
+    pass
+
+
 def decrypt(encrypted_message, passphrase):
     """Decrypts a GPG-encrypted message with given passphrase.
 
@@ -18,4 +23,4 @@ def decrypt(encrypted_message, passphrase):
             raise ValueError('Unable to decrypt')
         return str(msg)
     except Exception as e:
-        raise e
+        raise DecryptionError(e)

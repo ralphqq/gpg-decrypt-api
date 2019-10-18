@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from app.api.gpg_utils import decrypt
+from app.common.gpg_utils import decrypt, DecryptionError
 from tests.helpers import make_json_payload
 
 
@@ -24,7 +24,7 @@ class PGPDecryptTest(unittest.TestCase):
         self.assertEqual(result, self.plain_text)
 
     def test_incorrect_passphrase_raises_error(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(DecryptionError):
             result = decrypt(
                 encrypted_message=self.encrypted_message,
                 passphrase='wrongpassphrase'
