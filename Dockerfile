@@ -4,11 +4,8 @@ LABEL maintainer="ralph.quirequire@gmail.com"
 # Install gpg
 RUN apt-get update && apt-get install -y gnupg
 
-# Create a nonroot user
-RUN useradd -s /bin/bash -G sudo testuser
-
-# Set working directory to this user's home directory
-WORKDIR /home/testuser
+# Set working directory
+WORKDIR /home/decrypt_msg_api
 
 # Create a virtual environment
 RUN python -m venv /home/venv
@@ -33,9 +30,5 @@ ENV FLASK_APP=decryptmessage.py
 ENV FLASK_ENV=production
 ENV APP_SETTINGS=config.ProductionConfig
 
-# Set testuser as workdir owner and current user (exclude venv dir)
-RUN chown -R testuser:testuser ./
-USER testuser
-
-EXPOSE 5000
+EXPOSE 80
 ENTRYPOINT ["./entrypoint.sh"]
