@@ -4,14 +4,19 @@ set -e
 
 source /home/venv/bin/activate
 
-echo Generating secret key for Flask app
+# Generate secret key for Flask app
 echo SECRET_KEY=$(\
 python -c"import random; print(''.join(random.SystemRandom().\
 choices('abcdefghijklmnopqrstuvwxyz0123456789', k=50)))"\
 ) >> .env
 
-echo Creating symlink
+# Create symlink
 ln -s /home/decrypt_msg_api/run_tests.sh /usr/local/bin/run_tests.sh
 
-echo Starting up gunicorn
+# Run test if specified
+test_script=$1
+if [ "$test_script" == "run_tests.sh" ]; then
+  source ./run_tests.sh
+fi
+
 exec gunicorn -b 0.0.0.0:80 --access-logfile - --error-logfile - decryptmessage:app
