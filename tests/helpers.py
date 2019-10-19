@@ -3,15 +3,15 @@ import json
 import gnupg
 
 
-def make_json_payload(message, passphrase):
-    """Creates JSON payload to be sent to API endpoint.
+def make_payload(message, passphrase):
+    """Creates dict to be sent to API endpoint.
 
     Args:
         - message (str): the text to be encrypted
         passphrase (str): passphrase to be used in the encryption
 
     Returns:
-        JSON object that contains the following key-value pairs:
+        A dict that contains the following key-value pairs:
             'message': the GPG-encrypted text
             'passphrase': passphrase used to encrypt
     """
@@ -22,7 +22,7 @@ def make_json_payload(message, passphrase):
         recipients=None,
         symmetric='AES256'
     )
-    return json.dumps({
+    return {
         'message': str(msg),
         'passphrase': passphrase
-    })
+    }

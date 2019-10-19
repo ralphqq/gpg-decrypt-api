@@ -2,7 +2,7 @@ import json
 import unittest
 
 from app.common.gpg_utils import decrypt, DecryptionError
-from tests.helpers import make_json_payload
+from tests.helpers import make_payload
 
 
 class PGPDecryptTest(unittest.TestCase):
@@ -10,11 +10,11 @@ class PGPDecryptTest(unittest.TestCase):
     def setUp(self):
         self.plain_text = 'This is only a test message. Please disregard.'
         self.passphrase = 'topsecret'
-        payload = make_json_payload(
+        payload = make_payload(
             message=self.plain_text,
             passphrase=self.passphrase
         )
-        self.encrypted_message = json.loads(payload)['message']
+        self.encrypted_message = payload['message']
 
     def test_decrypt_function_returns_correct_message(self):
         result = decrypt(

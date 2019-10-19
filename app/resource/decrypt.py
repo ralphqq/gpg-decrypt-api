@@ -17,7 +17,6 @@ class DecryptMessage(Resource):
         payload = request.get_json()
         if payload is None:
             abort_no_payload()
-        payload = json.loads(payload)
         abort_bad_input_params(payload, params=['message', 'passphrase'])
 
         try:
