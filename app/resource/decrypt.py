@@ -25,9 +25,6 @@ class DecryptMessage(Resource):
                 encrypted_message=payload['message'],
                 passphrase=payload['passphrase']
             )
-            return {
-                'DecryptedMessage': result,
-                'passphrase': payload['passphrase']
-            }
+            return {'DecryptedMessage': result}
         except DecryptionError:
             abort_failed_decryption()

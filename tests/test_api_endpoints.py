@@ -5,7 +5,7 @@ from app.common.gpg_utils import DecryptionError
 from tests.base_setup import BaseTestCase
 from tests.helpers import make_json_payload
 
-PAYLOAD_FIELDS = ['DecryptedMessage', 'passphrase']
+PAYLOAD_FIELDS = ['DecryptedMessage']
 
 class DecryptMessageEndpointTest(BaseTestCase):
 
@@ -21,7 +21,7 @@ class DecryptMessageEndpointTest(BaseTestCase):
         self.plain_text = 'X'
         self.passphrase = 'Y'
         self.response = self.send_request(
-            url='/',
+            url='/decryptMessage',
             method='post',
             data=make_json_payload(
                 message=self.plain_text,
@@ -39,7 +39,7 @@ class DecryptMessageEndpointTest(BaseTestCase):
     def test_get_request_returns_405_status(self):
         self.mock_decrypt.called = False # Should still be False after below
         response = self.send_request(
-            url='/',
+            url='/decryptMessage',
             method='get',
             data=json.dumps({
                 'message': 'X',
@@ -60,14 +60,14 @@ class DecryptMessageEndpointTest(BaseTestCase):
 
     def testno_payload_error(self):
         self.mock_decrypt.called = False
-        response = self.send_request(url='/', method='post')
+        response = self.send_request(url='/decryptMessage', method='post')
         self.assertFalse(self.mock_decrypt.called)
         self.assertEqual(response.status_code, 400)
 
     def test_missing_message_param(self):
         self.mock_decrypt.called = False
         response = self.send_request(
-            url='/',
+            url='/decryptMessage',
             method='post',
             data=json.dumps({'passphrase': 'passphrase'})
         )
@@ -77,7 +77,7 @@ class DecryptMessageEndpointTest(BaseTestCase):
     def test_missing_passphrase_param(self):
         self.mock_decrypt.called = False
         response = self.send_request(
-            url='/',
+            url='/decryptMessage',
             method='post',
             data=json.dumps({'message': 'message'})
         )
@@ -88,7 +88,7 @@ class DecryptMessageEndpointTest(BaseTestCase):
         self.mock_decrypt.called = False    # This will be True later
         self.mock_decrypt.side_effect = DecryptionError
         response = self.send_request(
-            url='/',
+            url='/decryptMessage',
             method='post',
             data=json.dumps({
                 'message': self.plain_text,
