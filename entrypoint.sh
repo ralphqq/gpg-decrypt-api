@@ -19,4 +19,4 @@ if [ "$test_script" == "run_tests.sh" ]; then
   source ./run_tests.sh
 fi
 
-exec gunicorn -b 0.0.0.0:80 --access-logfile - --error-logfile - decryptmessage:app
+exec gunicorn -b 0.0.0.0:5000 --access-logfile - --error-logfile - decryptmessage:app

@@ -30,5 +30,5 @@ ENV FLASK_APP=decryptmessage.py
 ENV FLASK_ENV=production
 ENV APP_SETTINGS=config.ProductionConfig
 
-EXPOSE 80
+EXPOSE 5000
 ENTRYPOINT ["./entrypoint.sh"]
