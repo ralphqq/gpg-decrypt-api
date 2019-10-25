@@ -1,0 +1,7 @@
+__pycache__
+*.pyc
+.flaskenv
+.env
+*.json
+*.zip
+/tmp
